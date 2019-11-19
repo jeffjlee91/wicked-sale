@@ -25,11 +25,11 @@ class ProductList extends React.Component {
 
   render() {
     return (
-      <div className='container'>
+      <div className='container container-top-margin'>
         <div className='row'>
           {this.state.products.map(product => {
             return (
-              <ProductListItem key={product.productId} products={product}/>
+              <ProductListItem key={product.productId} products={product} setView={this.props.setView}/>
             );
           })}
         </div>
