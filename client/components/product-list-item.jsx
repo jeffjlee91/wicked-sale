@@ -3,8 +3,8 @@ import React from 'react';
 function ProductListItem(props) {
   const price = '$' + (props.products.price / 100).toFixed(2);
   return (
-    <div className='col-4'>
-      <div className='card height-500 overflow-hidden margin-top-30'>
+    <div className='col-lg-4 col-sm-6 col-md-6'>
+      <div className='card height-500 overflow-hidden my-3'>
         <img src={props.products.image} className='card-img-top fit-image'></img>
         <div className='card-body'>
           <h5 className='card-title'>{props.products.name}</h5>
