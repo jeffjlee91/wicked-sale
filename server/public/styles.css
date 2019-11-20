@@ -50,7 +50,8 @@
 }
 
 .rightofimage {
-    width: 60%
+    width: 60%;
+    padding-left: 30px;
 }
 
 .goBackButton {
