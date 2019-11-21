@@ -66,3 +66,7 @@
     z-index: 1;
     transition: trasform .3s;
 }
+
+.shoppingCart {
+    float: right;
+}

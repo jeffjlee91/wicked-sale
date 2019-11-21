@@ -8,6 +8,7 @@ class ProductDetails extends React.Component {
     };
     this.price = '$' + (this.props.product.price / 100).toFixed(2);
     this.clickHandler = this.clickHandler.bind(this);
+    this.addItemToCart = this.addItemToCart.bind(this);
   }
 
   componentDidMount() {
@@ -19,6 +20,10 @@ class ProductDetails extends React.Component {
           product: product
         });
       });
+  }
+
+  addItemToCart() {
+    this.props.addToCart(this.state.product.productId);
   }
 
   clickHandler() {
@@ -35,6 +40,7 @@ class ProductDetails extends React.Component {
             <h1 className=''>{this.state.product.name}</h1>
             <div className=''>{this.price}</div>
             <p className=''>{this.state.product.shortDescription}</p>
+            <div onClick={this.addItemToCart} type='button' className='btn btn-dark'>Add to Cart</div>
           </div>
           <p className='margin-top-20'>{this.state.product.longDescription}</p>
         </div>
