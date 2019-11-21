@@ -26,15 +26,15 @@ function check_connection($link) {
 }
 
 if ($request['method'] === 'POST') {
-    $test = $request['query']['productId'];
-    if ($test === null) {
+    $productId = $request['body']['productId'];
+    if ($productId === null) {
         throw new ApiError('Valid productId required.', 400);
     }
 
-    $link = get_db_link();
+    $link = get_db_link();        
     $getPrice = "select `price`
             from `products`
-            where `productId`=$test";
+            where `productId`=$productId";
     
     $result = $link->query($getPrice);
     $productprice = ($result->fetch_assoc())['price'];
@@ -42,7 +42,7 @@ if ($request['method'] === 'POST') {
     if($_SESSION['cart_id']) {
         $cartId = $_SESSION['cart_id'];
         $addItemToCart = "insert into `cartItems` (cartId, productId, price)
-        values ($cartId, $test, $productprice)";
+        values ($cartId, $productId, $productprice)";
         $result3 = $link->query($addItemToCart);
         $cartItemsId = $link->insert_id;
 
@@ -55,9 +55,9 @@ if ($request['method'] === 'POST') {
              from products
              join cartItems
              on products.productId = cartItems.productId
-             where cartItems.productId = $test";
+             where cartItems.productId = $productId";
         $result4 = $link->query($getCurrentItemInfo);
-        $currentItemInfo = $result4->fetch_all(MYSQLI_ASSOC);
+        $currentItemInfo = $result4->fetch_assoc();
 
         $response['body'] = $currentItemInfo;
         send($response);
