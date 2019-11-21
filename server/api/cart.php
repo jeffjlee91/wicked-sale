@@ -1,5 +1,4 @@
 <?php
-
 if ($request['method'] === 'GET') {
     if ($_SESSION['cart_id']) {
         $currentCart = $_SESSION['cart_id'];
@@ -26,6 +25,15 @@ function check_connection($link) {
 }
 
 if ($request['method'] === 'POST') {
+    if ($_SESSION['cart_id']) {
+    } else {
+        $createNewCart = "insert into carts (createdAt) 
+                    values (CURRENT_TIMESTAMP)";
+        $link = get_db_link();
+        $result2 = $link->query($createNewCart);
+        $cartId = $link->insert_id;
+        $_SESSION['cart_id'] = $cartId;
+    }
     $productId = $request['body']['productId'];
     if ($productId === null) {
         throw new ApiError('Valid productId required.', 400);
@@ -38,8 +46,6 @@ if ($request['method'] === 'POST') {
     
     $result = $link->query($getPrice);
     $productprice = ($result->fetch_assoc())['price'];
-
-    if($_SESSION['cart_id']) {
         $cartId = $_SESSION['cart_id'];
         $addItemToCart = "insert into `cartItems` (cartId, productId, price)
         values ($cartId, $productId, $productprice)";
@@ -61,11 +67,5 @@ if ($request['method'] === 'POST') {
 
         $response['body'] = $currentItemInfo;
         send($response);
-    } else {
-        $createNewCart = "insert into carts (createdAt) 
-                    values (CURRENT_TIMESTAMP)";
-        $result2 = $link->query($createNewCart);
-        $cartId = $link->insert_id;
-        $_SESSION['cart_id'] = $cartId;
-    }
+    
 }
