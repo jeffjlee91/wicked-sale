@@ -6,7 +6,7 @@ function CartSummaryItem(props) {
     <ul className='list-group'>
       <li className='list-group-item d-flex justify-content-between align-items-center'>
         <div className='leftSideImage'>
-          <img src={props.props.image} className='detail-image'></img>
+          <img src={props.props.image} className='detail-image width-60'></img>
         </div>
         <div className='rightSideInfo'>
           <h5 className=''>{props.props.name}</h5>
