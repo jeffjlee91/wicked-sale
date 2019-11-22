@@ -2,9 +2,16 @@
 if ($request['method'] === 'GET') {
     if ($_SESSION['cart_id']) {
         $currentCart = $_SESSION['cart_id'];
-        $getAllCartItems = "select *
-                            from cartItems
-                            where cartId=$currentCart";
+        $getAllCartItems = "select cartItems.cartItemId, 
+        products.productId,
+        products.name,
+        products.price,
+        products.image,
+        products.shortDescription
+        from products
+        join cartItems
+        on products.productId = cartItems.productId
+        where cartItems.cartId = $currentCart";;
         $link = get_db_link();
         $result = $link->query($getAllCartItems);
         $allCartItems = $result->fetch_all(MYSQLI_ASSOC);
@@ -46,13 +53,14 @@ if ($request['method'] === 'POST') {
     
     $result = $link->query($getPrice);
     $productprice = ($result->fetch_assoc())['price'];
-        $cartId = $_SESSION['cart_id'];
-        $addItemToCart = "insert into `cartItems` (cartId, productId, price)
-        values ($cartId, $productId, $productprice)";
-        $result3 = $link->query($addItemToCart);
-        $cartItemsId = $link->insert_id;
+        
+    $cartId = $_SESSION['cart_id'];
+    $addItemToCart = "insert into `cartItems` (cartId, productId, price)
+    values ($cartId, $productId, $productprice)";
+    $result3 = $link->query($addItemToCart);
+    $cartItemsId = $link->insert_id;
 
-        $getCurrentItemInfo = "select cartItems.cartItemId, 
+    $getCurrentItemInfo = "select cartItems.cartItemId, 
              products.productId,
              products.name,
              products.price,
@@ -62,10 +70,10 @@ if ($request['method'] === 'POST') {
              join cartItems
              on products.productId = cartItems.productId
              where cartItems.productId = $productId";
-        $result4 = $link->query($getCurrentItemInfo);
-        $currentItemInfo = $result4->fetch_assoc();
+    $result4 = $link->query($getCurrentItemInfo);
+    $currentItemInfo = $result4->fetch_assoc();
 
-        $response['body'] = $currentItemInfo;
-        send($response);
+    $response['body'] = $currentItemInfo;
+    send($response);
     
 }
