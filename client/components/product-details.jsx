@@ -35,7 +35,7 @@ class ProductDetails extends React.Component {
       <div className='container-top-margin'>
         <div onClick={this.clickHandler} type='button' className='btn btn-dark goBackButton'>Back to Catalog</div>
         <div className='detailcontainer'>
-          <img src={this.state.product.image} className='detail-image'></img>
+          <img src={this.state.product.image} className='detail-image moveImage'></img>
           <div className='rightofimage'>
             <h1 className=''>{this.state.product.name}</h1>
             <div className=''>{this.price}</div>
