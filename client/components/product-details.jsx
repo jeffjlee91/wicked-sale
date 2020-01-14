@@ -24,6 +24,7 @@ class ProductDetails extends React.Component {
 
   addItemToCart() {
     this.props.addToCart(this.state.product.productId);
+
   }
 
   clickHandler() {

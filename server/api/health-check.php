@@ -10,7 +10,7 @@ if ($request['method'] === 'GET') {
 }
 
 function check_connection($link) {
-  $sql = 'select *';
+  $sql = 'select 1';
   $link->query($sql);
   return 'Successfully connected to MySQL!';
 }
